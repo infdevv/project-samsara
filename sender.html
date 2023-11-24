@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Samsara</title>
+    <link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+    <style>
+        body {
+    font-family: 'Lexend', sans-serif;
+    font-size: 22px;
+    background-color: black; /* Light gray background */
+    color: #333; /* Dark text color for better readability */
+}
+
+.colored {
+    color: rgb(255, 0, 0);
+}
+
+.title {
+    background-color: #676b68;
+    cursor: default;
+    user-select: none;
+    color: #fff; /* White text color for better contrast */
+    height: 50px;
+    border-radius: 20px;
+}
+
+.tool-title {
+    background-color: navy;
+    color: lightgrey;
+}
+
+.tools {
+    border-radius: 20px;
+    background-color: #676b68;
+}
+
+.tool {
+    background-color: beige;
+    border-radius: 5px;
+}
+
+
+/* Button styling */
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #676b68;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #404040; /* Darker color on hover */
+}
+
+/* Input box styling */
+input {
+    width: 300px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #676b68;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+p{
+    max-width: 100px;
+    max-height: 200px;
+}
+/* Placeholder color for better visibility */
+input::placeholder {
+    color: #888;
+}
+
+.lspinner {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.spinner:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: black transparent black transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="title">
+        <a href="index.html">
+        <center>
+        <div style="display: inline-block; text-align: center;">
+            <h2 class="colored" style="display: inline; margin: 0;">&lt;</h2>
+            <h2 style="display: inline; margin: 0; color: white;">Project Samsara</h2>
+            <h2 class="colored" style="display: inline; margin: 0;">/ &gt;</h2>
+          </div>   
+        </center>  
+    </a>
+    </div>
+
+    <br>
+
+    <div class="tools">
+        <br>
+        <center>
+    <label for="method">HTTP Method:</label>
+    <select id="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+    </select>
+
+    <br>
+
+    <label for="endpoint">Endpoint:</label>
+    <input type="text" id="endpoint" placeholder="Enter endpoint URL" required>
+
+    <br>
+
+    <label for="request">Request Body:</label>
+    <textarea id="request" placeholder="Enter request body (if applicable)"></textarea>
+
+    <br>
+    <button onclick="sendRequest()">Send Request</button>
+    <br>
+    <h2>Response:</h2>
+    <pre id="response"></pre>
+    <br>
+</center>
+</div>
+
+    <script>
+        function sendRequest() {
+            const method = document.getElementById('method').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const requestBody = document.getElementById('request').value;
+
+            fetch(endpoint, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
